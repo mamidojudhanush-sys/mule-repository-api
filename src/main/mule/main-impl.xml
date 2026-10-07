@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="439e1cf2-bebd-4242-8658-9ebefba38b7e" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="main-implFlow" doc:id="f43ab90b-46cb-4f33-812e-53df696c503e" >
+		<http:listener doc:name="Listener" doc:id="81b90d4f-26ad-498f-bc3f-2651faa48a27" config-ref="HTTP_Listener_config" path="/api/gittest"/>
+		<logger level="INFO" doc:name="Logger started" doc:id="54233863-55a4-4b8e-8e40-d41b0963fa08" message="git started"/>
+		<ee:transform doc:name="Transform Message" doc:id="fdde3426-1e46-4f40-a413-6ea1c97e868a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": "Response from Git Project"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
